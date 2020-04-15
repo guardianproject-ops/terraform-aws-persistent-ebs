@@ -1,0 +1,54 @@
+---
+#
+# This is the canonical configuration for the `README.md`
+# Run `make readme` to rebuild the `README.md`
+#
+
+# Name of this project
+name: terraform-aws-persistent-ebs
+
+# License of this project
+license: "AGPL3"
+
+# Canonical GitLab repo
+gitlab_repo: guardianproject-ops/terraform-aws-persistent-ebs
+
+# Badges to display
+badges: []
+
+# Short description of this project
+description: |-
+  This is a terraform module that provides an EBS volume and associated IAM
+  policy to be used with an EC2 instance or auto-scaling group. This module
+  is best when used in conjunction with a single-node auto-scaling group, and
+  with the init-snippet that attaches the named EBS volume on boot.
+
+# How to use this project
+usage: |-
+
+  You will need to attach the policy to your EC2 instance/ASG using `module.persistent_ebs.iam_policy.id`.
+
+  ```hcl
+  module "persistent_ebs" {
+    source          = "git::https://gitlab.com/guardianproject-ops/terraform-aws-persistent-ebs?ref=tags/0.1.0"
+    namespace       = var.namespace
+    stage           = var.stage
+    delimiter       = var.delimiter
+    tags            = var.tags
+    az              = 'us-east-1a'
+    size            = 50 # 50GB
+    encrypted       = true
+    kms_key_id      = module.kms_key.arn
+  }
+  ```
+
+related: []
+
+include:
+  - "docs/terraform.md"
+
+# Contributors to this project
+contributors:
+  - name: "Abel Luck"
+    gitlab: "abelxluck"
+    gravatar: 0f605397e0ead93a68e1be26dc26481a
