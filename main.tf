@@ -4,7 +4,7 @@ module "label" {
   name       = var.name
   stage      = var.stage
   delimiter  = var.delimiter
-  attributes = var.attributes
+  attributes = concat(var.attributes, [var.az])
   tags = merge(
     var.tags,
     {
@@ -24,7 +24,6 @@ data "aws_region" "current" {}
 
 data "aws_iam_policy_document" "attach_ebs" {
   statement {
-    sid    = ""
     effect = "Allow"
 
     principals {
@@ -38,7 +37,6 @@ data "aws_iam_policy_document" "attach_ebs" {
 
 data "aws_iam_policy_document" "attach_ebs_policy" {
   statement {
-    sid    = ""
     effect = "Allow"
 
     actions = [
@@ -63,7 +61,7 @@ resource "aws_ebs_volume" "main" {
   encrypted         = var.encrypted
   kms_key_id        = var.kms_key_id
   snapshot_id       = var.snapshot_id
-  tags              = var.tags
+  tags              = module.label.tags
 }
 
 
@@ -72,7 +70,7 @@ resource "aws_ebs_volume" "main" {
 #################
 
 resource "aws_iam_policy" "attach_ebs" {
-  name        = "${var.name_prefix}-${var.az}-attach-ebs-${aws_ebs_volume.main.id}"
+  name        = "attach-ebs-${aws_ebs_volume.main.id}-${module.label.id}"
   path        = "/"
   description = "Allows attach/detach of EBS volume ${aws_ebs_volume.main.id}"
   policy      = data.aws_iam_policy_document.attach_ebs_policy.json
