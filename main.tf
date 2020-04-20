@@ -22,6 +22,10 @@ data "aws_partition" "current" {}
 
 data "aws_region" "current" {}
 
+data "aws_kms_key" "default" {
+  key_id = var.kms_key_id
+}
+
 data "aws_iam_policy_document" "attach_ebs" {
   statement {
     effect = "Allow"
@@ -36,6 +40,15 @@ data "aws_iam_policy_document" "attach_ebs" {
 }
 
 data "aws_iam_policy_document" "attach_ebs_policy" {
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "kms:Decrypt",
+    ]
+
+    resources = [data.aws_kms_key.default.arn]
+  }
   statement {
     effect = "Allow"
 
