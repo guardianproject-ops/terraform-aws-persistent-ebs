@@ -67,11 +67,12 @@ It's free and open source made available under the the [GNU Affero General Publi
 
 
 
+
 ## Usage
 
 
 **IMPORTANT:** The `master` branch is used in `source` just as an example. In your code, do not pin to `master` because there may be breaking changes between releases.
-Instead pin to the release tag (e.g. `?ref=tags/x.y.z`) of one of our [latest releases](https://gitlab.com/guardianproject-ops/terraform-aws-persistent-ebs/releases).
+Instead pin to the release tag (e.g. `?ref=tags/x.y.z`) of one of our [latest releases](https://gitlab.com/guardianproject-ops/terraform-aws-persistent-ebs/-/tags).
 
 
 
@@ -79,7 +80,7 @@ You will need to attach the policy to your EC2 instance/ASG using `module.persis
 
 ```hcl
 module "persistent_ebs" {
-  source          = "git::https://gitlab.com/guardianproject-ops/terraform-aws-persistent-ebs?ref=tags/0.1.0"
+  source          = "git::https://gitlab.com/guardianproject-ops/terraform-aws-persistent-ebs?ref=master"
   namespace       = var.namespace
   stage           = var.stage
   delimiter       = var.delimiter

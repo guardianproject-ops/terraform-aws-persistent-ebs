@@ -30,7 +30,7 @@ usage: |-
 
   ```hcl
   module "persistent_ebs" {
-    source          = "git::https://gitlab.com/guardianproject-ops/terraform-aws-persistent-ebs?ref=tags/0.1.0"
+    source          = "git::https://gitlab.com/guardianproject-ops/terraform-aws-persistent-ebs?ref=master"
     namespace       = var.namespace
     stage           = var.stage
     delimiter       = var.delimiter
